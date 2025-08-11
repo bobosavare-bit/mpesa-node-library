@@ -7,7 +7,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 
-const emitter = require('./callbacksemitter')
+const emitter = require('./USSDbacksemitter')
 
 app.use(bodyParser.json())
 app.get('/', (req, res) => {
@@ -39,13 +39,13 @@ app.post('/b2b/timeout', (req, res) => {
   })
 })
 app.post('/b2b/success', (req, res) => {
-  emitter.emit('b2bSuccessCallback', req.body)
+  emitter.emit('b2bSuccessUSSD', req.body)
   res.json({
     'ResponseCode': '00000000',
     'ResponseDesc': 'success'
   })
 })
-// B2C Call
+// B2C ussd
 app.post('/b2c/timeout', (req, res) => {
   emitter.emit('b2cTimeout', { simulation: true, success: true })
   res.json({
@@ -54,7 +54,7 @@ app.post('/b2c/timeout', (req, res) => {
   })
 })
 app.post('/b2c/success', (req, res) => {
-  emitter.emit('b2cSuccessCallback', req.body)
+  emitter.emit('b2cSuccessCal', req.body)
   res.json({
     'ResponseCode': '00000000',
     'ResponseDesc': 'success'
@@ -68,7 +68,7 @@ app.post('/c2b/confirmation', (req, res) => {
   })
 })
 app.post('/c2b/success', (req, res) => {
-  emitter.emit('c2bSuccessCallback', req.body)
+  emitter.emit('c2bSuccessUSSD', req.body)
   res.json({
     'ResponseCode': '00000000',
     'ResponseDesc': 'success'
@@ -77,7 +77,7 @@ app.post('/c2b/success', (req, res) => {
 
 // Lipa na mpesa
 app.post('/lipanampesa/success', (req, res) => {
-  emitter.emit('lipaNaMpesaOnlineSuccessCallback', req.body)
+  emitter.emit('lipaNaMpesaOnlineSuccessUSSD', req.body)
   res.json({
     'ResponseCode': '00000000',
     'ResponseDesc': 'success'
@@ -93,7 +93,7 @@ app.post('/reversal/timeout', (req, res) => {
   })
 })
 app.post('/reversal/success', (req, res) => {
-  emitter.emit('reversalSuccessCallback', req.body)
+  emitter.emit('reversalSuccessUSSD', req.body)
   res.json({
     'ResponseCode': '00000000',
     'ResponseDesc': 'success'
@@ -109,7 +109,7 @@ app.post('/transactionstatus/timeout', (req, res) => {
   })
 })
 app.post('/transactionstatus/success', (req, res) => {
-  emitter.emit('transactionStatusSuccessCallback', req.body)
+  emitter.emit('transactionStatusSuccessUSSD', req.body)
   res.json({
     'ResponseCode': '00000000',
     'ResponseDesc': 'success'
